@@ -18,14 +18,14 @@
 
             <div class="row">
                 <div class="col-lg-6">
-                    <form role="form">
+                    <form role="form" class="loginForm" method="post" noValidate>
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control" name="name">
+                            <input type="text" class="form-control" name="name" required>
                         </div>
                         <div class="form-group">                     
                             <label>Rank</label>                
-                            <input type="number" class="form-control" placeholder="Enter Rank" name="name">                 
+                            <input type="number" class="form-control" placeholder="Enter Rank" name="name" required>                 
                         </div>               
                         
                     <div class="form-group">
@@ -53,7 +53,7 @@
     </div>
     <!-- /#wrapper -->
 
-    <?php
+<?php
 
     include('headerFooter/footer.php')
 
