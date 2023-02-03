@@ -3,6 +3,14 @@
     include('headerFooter/header.php');
 
     include('../class/category.class.php');
+
+    @session_start();
+
+    if(isset($_SESSION['message']) && $_SESSION['message'] != "") {
+        $successMessage = $_SESSION['message'];
+        $_SESSION['message'] = "";
+    }
+
     $categoryObject = new Category();
 
     $dataList = $categoryObject->retrieve();
@@ -21,6 +29,11 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+            <?php
+                if(isset($successMessage)) {
+                    echo '<div class="alert alert-success">'.$successMessage.'</div>';
+                }
+            ?>
 
             <div class="row">
             <div class="panel-body">
@@ -35,13 +48,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php foreach($dataList as $key => $category) { ?>
+
                                     <tr class="odd gradeX">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 4.0</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">4</td>
-                                        <td class="center">X</td>
+                                        <td><?php echo $key+1; ?></td>
+                                        <td><?php echo $category['name']; ?></td>
+                                        <td><?php echo $category['rank']; ?></td>
+                                        <td class="center"><?php 
+                                        if($category['status'] == 1) {
+                                            echo "<label class='label-success'>Active</label>";
+                                        } else {
+                                            echo "<label class='label-danger'>InActive</label>";
+                                        }
+                                        
+                                        ?></td>
+                                        <td class="center" width="15%">
+                                            <a href="editCategory.php?id=<?php echo $category['id']; ?>" role="btn" class="btn btn-success"><i class="fa fa-edit"></i>Edit</a>
+                                            <a href="deleteCategory.php?id=<?php echo $category['id']; ?>" role="btn" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                                        </td>
                                     </tr>
+
+                                    <?php } ?>
+
                                 </tbody>
                             </table>
                         </div>
