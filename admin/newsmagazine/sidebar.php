@@ -29,7 +29,7 @@
                               
                             </ul>
                             <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> News Management<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-newspaper-o fa-fw"></i> News Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="createNews.php">Create News</a>
