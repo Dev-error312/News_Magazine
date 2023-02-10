@@ -11,6 +11,13 @@
             $this->$key = $value;
         }
 
+        public function validate($value) {
+            $val = htmlspecialchars($value);
+            $conn = mysqli_connect('localhost', 'root', '', 'newsmagazine');
+            $newValue = $conn->real_escape_string($val);
+            return $newValue;
+        }
+
     }
 
 ?>

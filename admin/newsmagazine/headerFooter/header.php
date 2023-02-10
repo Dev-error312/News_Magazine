@@ -1,9 +1,6 @@
 <?php
 
     @session_start();
-    // print_r($_SESSION);
-    // print_r($_COOKIE);
-
 
     if((!array_key_exists('username', $_SESSION)  && array_key_exists('username', $_COOKIE)) || empty($_COOKIE) || empty($_SESSION)){
         header('location:../index.php');
@@ -72,7 +69,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="dashboard.php">News Magazine</a>
+                <a class="navbar-brand" href="dashboard.php">Admin Panel</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -81,7 +78,7 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        <?php @session_start(); echo ucfirst($_SESSION['role']); ?><i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>

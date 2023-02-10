@@ -1,6 +1,6 @@
 <?php
 
-include('common.class.php');
+require_once('common.class.php');
 
     class News extends Common
     
@@ -10,7 +10,9 @@ include('common.class.php');
 
         public function save() {
             $conn = mysqli_connect('localhost', 'root', '', 'newsmagazine');
-            $sql = "insert into category(name, rank, status, created_by, created_date) values('$this->name', '$this->rank', '$this->status', '$this->created_by', '$this->created_date')";
+            $sql = "insert into news(title, short_detail, detail, image, featured, breaking, slider_key, status, created_by, created_date, category_id) 
+                    values('$this->title','$this->short_detail', '$this->detail', '$this->image', '$this->featured', '$this->breaking', '$this->slider_key', '$this->status', 
+                    '$this->created_by','$this->created_date', '$this->category_id')";
 
             $conn->query($sql);
 
@@ -36,12 +38,12 @@ include('common.class.php');
 
         public function edit() {
             $conn = mysqli_connect('localhost', 'root', '', 'newsmagazine');
-            $sql = "update category set name='$this->name',
-                                        rank='$this->rank', 
-                                        status='$this->status', 
-                                        modified_by='$this->modified_by', 
-                                        modified_date='$this->modified_date' 
-                                        where id='$this->id'";
+            $sql = "update news set title='$this->title', short_detail='$this->short_detail', detail='$this->detail', image='$this->image', featured='$this->featured', breaking='$this->breaking', slider_key='$this->slider_key',
+                    status='$this->status',
+                    modified_by='$this->modified_by', 
+                    modified_date='$this->modified_date',
+                    category_id='$this->category_id',
+                    where id='$this->id'";
             $conn->query($sql);
 
             if($conn->affected_rows == 1) {
@@ -53,7 +55,7 @@ include('common.class.php');
 
         public function delete() {
             $conn = mysqli_connect('localhost', 'root', '', 'newsmagazine');
-            $sql = "delete from category where id='$this->id'";
+            $sql = "delete from news where id='$this->id'";
             $var = $conn->query($sql);
             if($var) {
                 return "success";
@@ -64,7 +66,7 @@ include('common.class.php');
 
         public function getById() {
             $conn = mysqli_connect('localhost', 'root', '', 'newsmagazine');
-            $sql = "select * from category where id='$this->id'";
+            $sql = "select * from news where id='$this->id'";
             $var = $conn->query($sql);
             if($var->num_rows > 0) {
                 $data = $var->fetch_object();

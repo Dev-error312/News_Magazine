@@ -8,6 +8,7 @@
     @session_start();
 
     if(isset($_POST['submit'])) {
+        if(isset($_POST['CategoryEntry']) && !empty($_POST['CategoryEntry'])) {
         $category->set('name', $_POST['name']);
         $category->set('rank', $_POST['rank']);
         $category->set('status', $_POST['status']);
@@ -17,11 +18,14 @@
         $result = $category->save();
 
         if(is_integer($result)) {
+            $ErrMsg = "";
             $msg = "Category inserted Successfully with id ".$result;
         } else {
             $msg = "";
         }
-
+        } else {
+            $ErrMsg = "Category Already Taken!";
+        }
     }
 
    
@@ -91,3 +95,28 @@
     include('headerFooter/footer.php')
 
 ?>
+
+<script>
+    $(document).ready(function() {
+        $('#name').keyup(function() {
+            const value = $('#name').val();
+            $.ajax({
+                url: "checkCategoryName.php";
+                method: "post";
+                dataType: "text";
+                data: {
+                    'cateogoryName' : value
+                },
+                success: function(res) {
+                    if(res != "success") {
+                        $("#categoryError").text(res);
+                        $("#CategoryEntry").val("");
+                    } else {
+                        $("#categoryError").text("");
+                        $("#CategoryEntry").val("success");
+                    }
+                }
+            })
+        })
+    })
+</script>
