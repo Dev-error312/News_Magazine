@@ -10,6 +10,7 @@
     session_start();
     if($status == 'success') {
         $_SESSION['message'] = "Category Deleted Successfully!";
+        header('location:listNews.php');
     } else {
         $_SESSION['message'] = "Failed to Delete Cateogory!";
         header('location:listNews.php');

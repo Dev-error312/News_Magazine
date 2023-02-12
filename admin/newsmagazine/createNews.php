@@ -22,38 +22,32 @@
         $news->set('created_by', $_SESSION['id']);
         $news->set('created_date', date('Y-m-d H:i:s'));
 
-        if($_FILES['image']['error'] == 0) {
-            if($_FILES['image']['type'] == "image/png" || $_FILES['image']['type'] == "image/png" || $_FILES['image']['type'] == "image/jpeg") {
-                if($_FILES['image']['size'] <= 1024*1024) {
-                    $imageName = uniqid().$_FILES['image']['name'];
-                    move_uploaded_file($_FILES['image']['tmp_name'], '../images/'.$imageName);
-                    $news->set('image', $imageName);
-                } else {
-                    $imageError = "Error! Exceeded 1mb !";
-                }
-            }
-        } else {
-            $imageError = "Invalid Image!";
+        if($_FILES['image']['error'] == 0){
+          if($_FILES['image']['type'] == "image/jpg" || $_FILES['image']['type'] == "image/png" || $_FILES['image']['type'] == "image/jpeg"){
+          if($_FILES['image']['size'] <= 1024*1024){
+            $imageName = uniqid().$_FILES['image']['name'];
+            move_uploaded_file($_FILES['image']['tmp_name'], '../images/'.$imageName);
+            $news->set('image', $imageName);
+          }
+          else{
+            $imageError = "Error, Exceeded 1Mb!";
+          }
+        }else{
+          $imageError = "Invalid Image!"; 
         }
-
-        $result = $news->save();
-
-        if(is_integer($result)) {
-            $msg = "News inserted Successfully with id ".$result;
-        } else {
-            $msg = "";
+      }
+        $result = $news->save();   
+        if(is_integer($result)){
+            $ErrMs= "";
+            $msg = "News inserted saved Successfully with id ".$result;
+        }else{
+            $msg = ""; 
         }
-
-    }
-
-   
-    include('sidebar.php');
+     }
+     include('sideBar.php');
 
 ?>
-            <!-- /.navbar-static-side -->
-        </nav>
-
-        <div id="page-wrapper">
+<div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Create News</h1>
@@ -67,7 +61,7 @@
       <?php  if(isset($ErrMsg)) { ?>
       <div class="alert alert-danger"><?php echo $ErrMsg;  ?></div>
       <?php  } ?>
-      <form role="form" id="submitForm" method="post" noValidate>
+      <form role="form" id="submitForm" method="post" enctype='multipart/form-data' noValidate>
         <div class="form-group">
           <label>Title</label>
           <input type="text" class="form-control" name="title" id="title" required>
@@ -76,11 +70,11 @@
         </div>
         <div class="form-group">
           <label>News Category</label>
-          <select class="form-control">
+          <select class="form-control" name='category_id'>
             <option value="">Select Category</option>
             <?php
                 foreach($categoryList as $category) { ?>
-                    <option value=" <?php echo $category['id']; ?>"><?php echo $category['name']; ?> </option>
+                    <option value=" <?php echo $category['id']; ?>" ><?php echo $category['name']; ?></option>
             <?php } ?>
           </select>
         </div>

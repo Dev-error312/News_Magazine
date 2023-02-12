@@ -1,18 +1,18 @@
 <?php
- include('headerFooter/header.php');
- include('../class/category.class.php');
- @session_start();
- if(isset($_SESSION['message']) && $_SESSION['message'] != ""){
-    $successMessage = $_SESSION['message'];
-    $_SESSION['message'] = "";
- }
- include('../class/news.class.php');
+    include('headerFooter/header.php');
+    include('../class/category.class.php');
+    @session_start();
+    if(isset($_SESSION['message']) && $_SESSION['message'] != ""){
+        $successMessage = $_SESSION['message'];
+        $_SESSION['message'] = "";
+    }
+    include('../class/news.class.php');
 
- $newsObject = new News();
+    $newsObject = new News();
 
- $newsList = $newsObject->retrieve();
+    $newsList = $newsObject->retrieve();
 
- include('sideBar.php');
+    include('sideBar.php');
 ?>
 <div id="page-wrapper">
   <div class="row">

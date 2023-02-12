@@ -10,10 +10,12 @@ require_once('common.class.php');
 
         public function save() {
             $conn = mysqli_connect('localhost', 'root', '', 'newsmagazine');
-            $sql = "insert into news(title, short_detail, detail, image, featured, breaking, slider_key, status, created_by, created_date, category_id) 
-                    values('$this->title','$this->short_detail', '$this->detail', '$this->image', '$this->featured', '$this->breaking', '$this->slider_key', '$this->status', 
+            $sql = "INSERT INTO `news` (`title`, `short_detail`, `detail`, `image`,
+             `featured`, `breaking`, `status`, `slider_key`, `created_by`, `created_date`, `category_id`) 
+                    VALUES ('$this->title','$this->short_detail', 
+                    '$this->detail', '$this->image', '$this->featured', '$this->breaking', '$this->status', '$this->slider_key',
                     '$this->created_by','$this->created_date', '$this->category_id')";
-
+            // echo $sql;
             $conn->query($sql);
 
             if($conn->affected_rows == 1 && $conn->insert_id > 0) {
